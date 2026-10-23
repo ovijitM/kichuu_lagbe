@@ -105,17 +105,49 @@ export function LoginPage() {
   }
 
   return (
-    <main className="min-h-screen bg-surface flex flex-col justify-center items-center py-10 px-4">
+    <main className="min-h-screen bg-surface flex flex-col justify-center items-center py-8 px-4">
       {/* Background ambient glow */}
       <div className="fixed top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-gradient-to-br from-mint/40 via-surface-container/30 to-transparent blur-3xl -z-10 pointer-events-none"></div>
+
+      {/* Top Navigation Bar: Back to Home */}
+      <div className="w-full max-w-4xl mb-3 flex items-center justify-between">
+        <Link
+          to="/"
+          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white border border-line text-xs font-bold text-ink shadow-xs hover:bg-surface-low hover:text-primary transition-all group"
+        >
+          <span className="material-symbols-outlined text-base group-hover:-translate-x-0.5 transition-transform text-primary">
+            arrow_back
+          </span>
+          <span>Back to Home</span>
+        </Link>
+
+        <Link
+          to="/"
+          className="text-xs font-semibold text-primary hover:underline flex items-center gap-1"
+        >
+          <span className="material-symbols-outlined text-sm">storefront</span>
+          <span className="hidden sm:inline">Explore Bashundhara Marketplace</span>
+          <span className="sm:hidden">Marketplace</span>
+        </Link>
+      </div>
 
       <div className="w-full max-w-4xl grid md:grid-cols-12 rounded-3xl border border-line bg-white shadow-modal overflow-hidden">
         {/* Left Branding Showcase Column */}
         <div className="md:col-span-5 bg-gradient-to-br from-primary-deep via-primary to-primary-dark p-8 text-on-primary flex flex-col justify-between relative overflow-hidden">
           <div className="relative z-10">
-            <Link to="/" className="inline-flex items-center group" aria-label="Kichuu Lagbe home">
-              <Brand dark size="lg" subtitle="Bashundhara Community" />
-            </Link>
+            <div className="flex items-center justify-between">
+              <Link to="/" className="inline-flex items-center group" aria-label="Kichuu Lagbe home">
+                <Brand dark size="lg" subtitle="Bashundhara Community" />
+              </Link>
+              <Link
+                to="/"
+                className="hidden sm:inline-flex items-center gap-1 text-[11px] font-bold text-white/80 hover:text-white px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 transition-all"
+                title="Return to marketplace home"
+              >
+                <span className="material-symbols-outlined text-sm">home</span>
+                <span>Home</span>
+              </Link>
+            </div>
 
             <div className="mt-10">
               <span className="rounded-full bg-secondary-fixed/20 border border-secondary-fixed/30 text-secondary-fixed px-3 py-1 text-[11px] font-bold uppercase tracking-wider inline-flex items-center gap-1">
@@ -154,6 +186,20 @@ export function LoginPage() {
         {/* Right Form Column */}
         <div className="md:col-span-7 p-6 sm:p-10 flex flex-col justify-between">
           <div>
+            {/* Mobile-Only Top Bar & Back Button */}
+            <div className="flex md:hidden items-center justify-between mb-4 pb-3 border-b border-line">
+              <Link to="/" className="inline-flex items-center group">
+                <Brand size="sm" />
+              </Link>
+              <Link
+                to="/"
+                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-surface-low border border-line text-xs font-bold text-ink hover:text-primary transition-colors"
+              >
+                <span className="material-symbols-outlined text-sm">arrow_back</span>
+                <span>Home</span>
+              </Link>
+            </div>
+
             {/* Mode Switcher Tabs */}
             <div className="flex rounded-xl bg-surface-low p-1 border border-line mb-6">
               <button
