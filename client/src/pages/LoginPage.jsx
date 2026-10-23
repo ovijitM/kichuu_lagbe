@@ -4,11 +4,51 @@ import { ROLE_HOME, useAuth } from "../auth/AuthContext.jsx";
 import { Brand } from "../components/Brand.jsx";
 
 const devRoles = [
-  { value: "resident", label: "Resident", icon: "person", hint: "tanvir@kichuulagbe.local" },
-  { value: "shop_owner", label: "Shop Owner", icon: "store", hint: "shop@kichuulagbe.local" },
-  { value: "service_provider", label: "Technician", icon: "handyman", hint: "kabir@kichuulagbe.local" },
-  { value: "rider", label: "Rider", icon: "two_wheeler", hint: "hasan@kichuulagbe.local" },
-  { value: "admin", label: "Admin Dispatch", icon: "admin_panel_settings", hint: "admin@kichuulagbe.local" },
+  {
+    value: "resident",
+    label: "Resident",
+    icon: "person",
+    desc: "Order Groceries & Repairs",
+    email: "tanvir@kichuulagbe.local",
+    color: "hover:border-emerald-500 hover:bg-emerald-50/50",
+    badgeColor: "bg-emerald-100 text-emerald-800",
+  },
+  {
+    value: "shop_owner",
+    label: "Shop Owner",
+    icon: "store",
+    desc: "Bashundhara Fresh Hub",
+    email: "shop@kichuulagbe.local",
+    color: "hover:border-amber-500 hover:bg-amber-50/50",
+    badgeColor: "bg-amber-100 text-amber-800",
+  },
+  {
+    value: "service_provider",
+    label: "Technician",
+    icon: "handyman",
+    desc: "AC, Electric & Plumbing",
+    email: "kabir@kichuulagbe.local",
+    color: "hover:border-blue-500 hover:bg-blue-50/50",
+    badgeColor: "bg-blue-100 text-blue-800",
+  },
+  {
+    value: "rider",
+    label: "Delivery Rider",
+    icon: "two_wheeler",
+    desc: "Internal Neighborhood Runs",
+    email: "hasan@kichuulagbe.local",
+    color: "hover:border-purple-500 hover:bg-purple-50/50",
+    badgeColor: "bg-purple-100 text-purple-800",
+  },
+  {
+    value: "admin",
+    label: "Admin Dispatch",
+    icon: "admin_panel_settings",
+    desc: "Operations Control Center",
+    email: "admin@kichuulagbe.local",
+    color: "hover:border-rose-500 hover:bg-rose-50/50",
+    badgeColor: "bg-rose-100 text-rose-800",
+  },
 ];
 
 const signupRoles = [
@@ -268,35 +308,50 @@ export function LoginPage() {
             </form>
           </div>
 
-          {/* Dev Quick-Sign In Panel */}
-          {import.meta.env.DEV && (
-            <div className="mt-6 pt-4 border-t border-line">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-muted flex items-center gap-1">
-                  <span className="material-symbols-outlined text-xs text-primary">developer_mode</span>
-                  Quick Dev Sign-In (1-Click)
+          {/* 1-Click Demo Sign-In Panel (Always Available) */}
+          <div className="mt-6 pt-5 border-t border-line">
+            <div className="flex items-center justify-between mb-2.5">
+              <div className="flex items-center gap-1.5">
+                <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span className="text-[11px] font-bold uppercase tracking-wider text-ink flex items-center gap-1">
+                  <span className="material-symbols-outlined text-xs text-primary">flash_on</span>
+                  1-Click Demo Sign-In
                 </span>
-                <Link to="/" className="text-[10px] font-semibold text-primary hover:underline">
-                  Back to Home
-                </Link>
+                <span className="text-[10px] text-muted hidden sm:inline">
+                  (Instant access without password)
+                </span>
               </div>
-
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
-                {devRoles.map((r) => (
-                  <button
-                    key={r.value}
-                    type="button"
-                    disabled={pending}
-                    onClick={() => signInAs(r.value)}
-                    className="p-1.5 rounded-lg border border-line bg-surface-low hover:bg-surface-container text-ink text-left transition-colors flex items-center gap-1.5"
-                  >
-                    <span className="material-symbols-outlined text-sm text-primary">{r.icon}</span>
-                    <span className="text-[11px] font-bold truncate">{r.label}</span>
-                  </button>
-                ))}
-              </div>
+              <Link to="/" className="text-[10px] font-semibold text-primary hover:underline">
+                Back to Home
+              </Link>
             </div>
-          )}
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              {devRoles.map((r) => (
+                <button
+                  key={r.value}
+                  type="button"
+                  disabled={pending}
+                  onClick={() => signInAs(r.value)}
+                  className={`group p-2.5 rounded-xl border border-line bg-surface-low text-left transition-all hover:shadow-sm flex flex-col justify-between ${r.color} disabled:opacity-50`}
+                  title={`1-Click login as ${r.label}`}
+                >
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="material-symbols-outlined text-base text-primary group-hover:scale-110 transition-transform">
+                      {r.icon}
+                    </span>
+                    <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full ${r.badgeColor}`}>
+                      1-Click
+                    </span>
+                  </div>
+                  <div>
+                    <div className="text-[11px] font-bold text-ink leading-tight">{r.label}</div>
+                    <div className="text-[9px] text-muted line-clamp-1 mt-0.5">{r.desc}</div>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </main>

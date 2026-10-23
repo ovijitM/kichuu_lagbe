@@ -361,6 +361,13 @@ export function LandingPage() {
               <div className="flex items-center gap-2">
                 <Link
                   to="/login"
+                  className="rounded-xl bg-mint/80 border border-primary/30 px-3 py-1.5 text-xs font-bold text-primary-dark hover:bg-mint transition-all flex items-center gap-1 shadow-xs"
+                >
+                  <span className="material-symbols-outlined text-sm text-primary">flash_on</span>
+                  <span>1-Click Demo</span>
+                </Link>
+                <Link
+                  to="/login"
                   className="hidden sm:inline-flex rounded-xl border border-line px-3.5 py-1.5 text-xs font-bold text-ink hover:bg-surface-low transition-colors"
                 >
                   Sign In

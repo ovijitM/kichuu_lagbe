@@ -68,12 +68,26 @@ const devLoginSchema = z.object({
 
 router.post("/dev-login", validate(devLoginSchema), async (req, res, next) => {
   try {
-    if (env.isProd) return res.status(404).json({ message: "Not found" });
-    const email = process.env[devAccountEmail[req.body.role]]?.trim().toLowerCase();
-    if (!email) return res.status(500).json({ message: "That role is missing from server/.env." });
-    const user = await User.findOne({ email });
-    if (!user) return res.status(404).json({ message: "Run npm run seed so this account exists." });
-    if (user.status === "suspended") return res.status(403).json({ message: "This account is suspended." });
+    if (process.env.DISABLE_DEV_LOGIN === "true") {
+      return res.status(404).json({ message: "Demo 1-click login is disabled." });
+    }
+    const role = req.body.role;
+    const configuredEmail = process.env[devAccountEmail[role]]?.trim().toLowerCase();
+    let user = null;
+    if (configuredEmail) {
+      user = await User.findOne({ email: configuredEmail });
+    }
+    if (!user) {
+      user = await User.findOne({ role, status: "active" });
+    }
+    if (!user) {
+      return res.status(404).json({
+        message: `Account for '${role}' not found. Please run 'npm run seed' to initialize demo accounts.`,
+      });
+    }
+    if (user.status === "suspended") {
+      return res.status(403).json({ message: "This account is suspended." });
+    }
     res.json({ token: signToken(user), user: publicUser(user) });
   } catch (error) {
     next(error);
