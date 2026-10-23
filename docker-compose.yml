@@ -1,0 +1,93 @@
+version: "3.8"
+
+services:
+  # Frontend Client (Nginx + Compiled React/Vite SPA)
+  web:
+    build:
+      context: .
+      dockerfile: client/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - api
+    networks:
+      - internal
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=${TRAEFIK_NETWORK:-traefik-public}"
+      # HTTP entrypoint (Port 80)
+      - "traefik.http.routers.kichuu-web-http.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.kichuu-web-http.entrypoints=web"
+      # HTTPS entrypoint (Port 443 with TLS)
+      - "traefik.http.routers.kichuu-web.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.kichuu-web.entrypoints=websecure"
+      - "traefik.http.routers.kichuu-web.tls=true"
+      - "traefik.http.routers.kichuu-web.tls.certresolver=${TRAEFIK_CERTRESOLVER:-letsencrypt}"
+      - "traefik.http.services.kichuu-web.loadbalancer.server.port=80"
+
+  # Backend Express REST API
+  api:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - MONGODB_URI=${MONGODB_URI:-mongodb://mongo:27017/kichuu_lagbe}
+      - JWT_SECRET=${JWT_SECRET}
+      - CLIENT_ORIGIN=${CLIENT_ORIGIN:-https://${DOMAIN}}
+      - RESIDENT_NAME=${RESIDENT_NAME:-Tanvir Ahmed}
+      - RESIDENT_EMAIL=${RESIDENT_EMAIL:-tanvir@kichuulagbe.local}
+      - RESIDENT_PASSWORD=${RESIDENT_PASSWORD:-Resident123!}
+      - SHOP_OWNER_NAME=${SHOP_OWNER_NAME:-Bashundhara Fresh Hub}
+      - SHOP_OWNER_EMAIL=${SHOP_OWNER_EMAIL:-shop@kichuulagbe.local}
+      - SHOP_OWNER_PASSWORD=${SHOP_OWNER_PASSWORD:-Shop12345!}
+      - PROVIDER_NAME=${PROVIDER_NAME:-Kabir Ahmed}
+      - PROVIDER_EMAIL=${PROVIDER_EMAIL:-kabir@kichuulagbe.local}
+      - PROVIDER_PASSWORD=${PROVIDER_PASSWORD:-Provider123!}
+      - RIDER_NAME=${RIDER_NAME:-Hasan Rider}
+      - RIDER_EMAIL=${RIDER_EMAIL:-hasan@kichuulagbe.local}
+      - RIDER_PASSWORD=${RIDER_PASSWORD:-Rider1234!}
+      - ADMIN_NAME=${ADMIN_NAME:-Kichuu Admin}
+      - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@kichuulagbe.local}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-Admin1234!}
+    depends_on:
+      - mongo
+    networks:
+      - internal
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=${TRAEFIK_NETWORK:-traefik-public}"
+      # Route /api with high priority directly to Node.js backend
+      - "traefik.http.routers.kichuu-api-http.rule=Host(`${DOMAIN}`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.kichuu-api-http.entrypoints=web"
+      - "traefik.http.routers.kichuu-api-http.priority=50"
+      - "traefik.http.routers.kichuu-api.rule=Host(`${DOMAIN}`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.kichuu-api.entrypoints=websecure"
+      - "traefik.http.routers.kichuu-api.tls=true"
+      - "traefik.http.routers.kichuu-api.tls.certresolver=${TRAEFIK_CERTRESOLVER:-letsencrypt}"
+      - "traefik.http.routers.kichuu-api.priority=50"
+      - "traefik.http.services.kichuu-api.loadbalancer.server.port=5000"
+
+  # Database (Local MongoDB fallback; will be bypassed if external MONGODB_URI/Atlas is used)
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - internal
+
+networks:
+  # Internal network for container-to-container communication
+  internal:
+    driver: bridge
+  # External network where Traefik is running
+  traefik:
+    external: true
+    name: ${TRAEFIK_NETWORK:-traefik-public}
+
+volumes:
+  mongo_data:
