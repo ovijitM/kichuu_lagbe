@@ -8,7 +8,7 @@ This guide explains how to deploy **Kichuu Lagbe** on a Linux server using **Doc
 
 1. **Docker & Docker Compose** installed on your server.
 2. An active **Traefik reverse proxy** instance running in Docker on an external network (e.g., `traefik-net`, `proxy`, etc.).
-3. A domain or subdomain (e.g., `kichuu.example.com`) pointing to your server's public IP address (A record).
+3. A domain or subdomain (e.g., `kischuulagbe.ovijit.com`) pointing to your server's public IP address (A record).
 
 ---
 
@@ -29,7 +29,7 @@ nano .env
 Set the following variables in `.env`:
 ```env
 # Your actual domain pointing to the server
-DOMAIN=kichuuagbe.ovijit.com
+DOMAIN=kischuulagbe.ovijit.com
 
 # The name of the Docker network your Traefik container is attached to
 # (From your server: `traefik-public`)
