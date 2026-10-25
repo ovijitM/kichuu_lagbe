@@ -1,19 +1,26 @@
-# Dependencies
+# Dependencies and package-manager caches
 node_modules/
+.npm/
+.pnpm-store/
+.yarn/
+yarn-debug.log*
+yarn-error.log*
 
-# Production builds
+# Production builds and test output
 dist/
 client/dist/
+build/
+coverage/
 
 # Environment files
 .env
+.env.*
+!.env.example
 .env.local
 .env.*.local
-!.env.example
 
-# IDE & Editor folders
+# IDE and editor folders
 .cursor/
-.cursor
 .vscode/
 .idea/
 
@@ -22,11 +29,18 @@ resources/
 resources
 .resources/
 
-# Logs & temp
+# Logs, temp files, and local databases
 *.log
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+*.tmp
+*.temp
+*.swp
+*.swo
+mongodb-data/
+mongo-data/
+data/db/
 .DS_Store
 Thumbs.db
-coverage/
+
+# Local Docker overrides
+docker-compose.override.yml

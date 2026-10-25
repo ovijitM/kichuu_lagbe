@@ -35,9 +35,13 @@ async function upsertCategory(name, kind) {
 
 await connectDb(env.mongoUri);
 
-const indexes = await User.collection.indexes();
-if (indexes.some((index) => index.name === "phone_1")) {
-  await User.collection.dropIndex("phone_1");
+try {
+  const indexes = await User.collection.indexes();
+  if (indexes.some((index) => index.name === "phone_1")) {
+    await User.collection.dropIndex("phone_1");
+  }
+} catch (error) {
+  if (error.code !== 26) throw error;
 }
 await User.deleteMany({ email: { $exists: false } });
 await syncIndexes();
