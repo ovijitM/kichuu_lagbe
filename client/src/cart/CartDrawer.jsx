@@ -33,7 +33,7 @@ export function CartDrawer() {
           ></div>
 
           {/* Drawer Body */}
-          <div className="relative w-full max-w-md bg-white h-full shadow-2xl flex flex-col justify-between z-10 animate-slideInRight border-l border-line">
+          <div className="relative flex h-dvh w-full max-w-md flex-col justify-between border-l border-line bg-white pb-[env(safe-area-inset-bottom)] shadow-2xl z-10 animate-slideInRight">
             {/* Drawer Top Header */}
             <div className="p-4 border-b border-line flex items-center justify-between bg-surface-lowest">
               <div className="flex items-center gap-2.5">
@@ -132,7 +132,7 @@ export function CartDrawer() {
                           <button
                             type="button"
                             onClick={() => updateQuantity(product.id, -1)}
-                            className="h-6 w-6 rounded-lg text-ink hover:bg-white flex items-center justify-center text-xs font-bold transition-colors"
+                            className="h-10 w-10 rounded-lg text-ink hover:bg-white flex items-center justify-center text-xs font-bold transition-colors"
                           >
                             -
                           </button>
@@ -140,7 +140,7 @@ export function CartDrawer() {
                           <button
                             type="button"
                             onClick={() => updateQuantity(product.id, 1)}
-                            className="h-6 w-6 rounded-lg text-ink hover:bg-white flex items-center justify-center text-xs font-bold transition-colors"
+                            className="h-10 w-10 rounded-lg text-ink hover:bg-white flex items-center justify-center text-xs font-bold transition-colors"
                           >
                             +
                           </button>
@@ -148,7 +148,7 @@ export function CartDrawer() {
                         <button
                           type="button"
                           onClick={() => removeFromCart(product.id)}
-                          className="h-6 w-6 rounded-lg text-muted hover:text-danger hover:bg-red-50 flex items-center justify-center transition-colors"
+                          className="h-10 w-10 rounded-lg text-muted hover:text-danger hover:bg-red-50 flex items-center justify-center transition-colors"
                           aria-label="Remove item"
                         >
                           <span className="material-symbols-outlined text-sm">close</span>
@@ -193,7 +193,7 @@ export function CartDrawer() {
                     setIsCartDrawerOpen(false);
                     handleCheckout();
                   }}
-                  className="w-full py-3 rounded-2xl bg-primary text-white font-display text-xs font-extrabold shadow-md hover:bg-primary-dark transition-all flex items-center justify-center gap-2"
+                  className="min-h-12 w-full rounded-2xl bg-primary text-white font-display text-xs font-extrabold shadow-md hover:bg-primary-dark transition-all flex items-center justify-center gap-2"
                 >
                   <span className="material-symbols-outlined text-base">bolt</span>
                   <span>Instant Checkout · ৳{grandTotal}</span>

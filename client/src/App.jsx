@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { ROLE_HOME, useAuth } from "./auth/AuthContext.jsx";
 import { PanelLayout, ResidentLayout } from "./components/Layouts.jsx";
+import { ROLE_CONFIGS } from "./config/roleConfigs.js";
 import { AdminDispatchPage } from "./pages/admin/AdminDispatchPage.jsx";
 import { AdminShopsPage } from "./pages/admin/ShopsPage.jsx";
 import { LandingPage } from "./pages/LandingPage.jsx";
@@ -13,14 +14,6 @@ import { ResidentShopsPage } from "./pages/resident/ShopsPage.jsx";
 import { InstantMartPage } from "./pages/resident/InstantMartPage.jsx";
 import { RiderDashboardPage } from "./pages/rider/RiderDashboardPage.jsx";
 import { GuestRoute, ProtectedRoute } from "./routes/guards.jsx";
-
-const merchantNav = [{ to: "/merchant", label: "Shop Dashboard" }];
-const providerNav = [{ to: "/provider", label: "Job Console" }];
-const riderNav = [{ to: "/rider", label: "Delivery Runs" }];
-const adminNav = [
-  { to: "/admin", label: "Dispatch Terminal" },
-  { to: "/admin/shops", label: "Shop Approvals" },
-];
 
 export default function App() {
   return (
@@ -56,7 +49,7 @@ export default function App() {
         path="/merchant"
         element={
           <ProtectedRoute roles={["shop_owner"]}>
-            <PanelLayout items={merchantNav} />
+            <PanelLayout config={ROLE_CONFIGS.shop_owner} />
           </ProtectedRoute>
         }
       >
@@ -68,7 +61,7 @@ export default function App() {
         path="/provider"
         element={
           <ProtectedRoute roles={["service_provider"]}>
-            <PanelLayout items={providerNav} />
+            <PanelLayout config={ROLE_CONFIGS.service_provider} />
           </ProtectedRoute>
         }
       >
@@ -80,7 +73,7 @@ export default function App() {
         path="/rider"
         element={
           <ProtectedRoute roles={["rider"]}>
-            <PanelLayout items={riderNav} />
+            <PanelLayout config={ROLE_CONFIGS.rider} />
           </ProtectedRoute>
         }
       >
@@ -92,7 +85,7 @@ export default function App() {
         path="/admin"
         element={
           <ProtectedRoute roles={["admin"]}>
-            <PanelLayout items={adminNav} />
+            <PanelLayout config={ROLE_CONFIGS.admin} />
           </ProtectedRoute>
         }
       >
