@@ -266,7 +266,7 @@ export function InstantMartPage() {
           <button
             type="button"
             onClick={() => setSpeedOnly(!speedOnly)}
-            className={`flex items-center gap-1 rounded-full px-3 py-1 text-xs font-bold transition-all ${
+            className={`flex min-h-11 items-center gap-1 rounded-full px-3 py-1 text-xs font-bold transition-all ${
               speedOnly
                 ? "bg-primary text-white shadow-sm"
                 : "border border-line bg-surface-low text-muted hover:bg-surface-container"
@@ -279,7 +279,7 @@ export function InstantMartPage() {
           <button
             type="button"
             onClick={() => setInStockOnly(!inStockOnly)}
-            className={`flex items-center gap-1 rounded-full px-3 py-1 text-xs font-bold transition-all ${
+            className={`flex min-h-11 items-center gap-1 rounded-full px-3 py-1 text-xs font-bold transition-all ${
               inStockOnly
                 ? "bg-primary text-white shadow-sm"
                 : "border border-line bg-surface-low text-muted hover:bg-surface-container"
@@ -292,7 +292,7 @@ export function InstantMartPage() {
           <button
             type="button"
             onClick={() => setOffersOnly(!offersOnly)}
-            className={`flex items-center gap-1 rounded-full px-3 py-1 text-xs font-bold transition-all ${
+            className={`flex min-h-11 items-center gap-1 rounded-full px-3 py-1 text-xs font-bold transition-all ${
               offersOnly
                 ? "bg-amber text-white shadow-sm"
                 : "border border-line bg-surface-low text-muted hover:bg-surface-container"
@@ -316,7 +316,7 @@ export function InstantMartPage() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search groceries, Kinley water jars, eggs, farm milk, midnight snacks..."
-            className="w-full rounded-2xl border border-line bg-white pl-10 pr-4 py-2.5 text-xs text-ink placeholder:text-muted focus:border-primary focus:outline-none shadow-sm"
+            className="min-h-11 w-full rounded-2xl border border-line bg-white pl-10 pr-4 py-2.5 text-xs text-ink placeholder:text-muted focus:border-primary focus:outline-none shadow-sm"
           />
           {searchQuery && (
             <button
@@ -329,7 +329,7 @@ export function InstantMartPage() {
         </div>
 
         {/* Category Horizontal Filter Pills */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+        <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
           {CATEGORIES.map((cat) => {
             const isActive = selectedCategory === cat.id;
             return (
@@ -337,7 +337,7 @@ export function InstantMartPage() {
                 key={cat.id}
                 type="button"
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`flex items-center gap-2 whitespace-nowrap px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 ${
+                className={`flex min-h-11 items-center gap-2 whitespace-nowrap px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 ${
                   isActive
                     ? "bg-primary text-white shadow-sm"
                     : "border border-line bg-white text-muted hover:bg-surface-low hover:text-ink"
@@ -403,7 +403,7 @@ export function InstantMartPage() {
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 min-[420px]:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4">
               {filteredProducts.map((item) => {
                 const inCartItem = cart.find((c) => c.product.id === item.id);
                 const quantityInCart = inCartItem?.quantity || 0;
@@ -415,7 +415,7 @@ export function InstantMartPage() {
                   >
                     <div>
                       {/* Image Thumbnail with Overlay Badges */}
-                      <div className="relative h-44 w-full overflow-hidden rounded-xl bg-surface-low mb-3">
+                      <div className="relative h-40 sm:h-44 w-full overflow-hidden rounded-xl bg-surface-low mb-3">
                         <img
                           src={item.image}
                           alt={item.name}
@@ -471,7 +471,7 @@ export function InstantMartPage() {
                         <button
                           type="button"
                           onClick={() => addToCart(item)}
-                          className="w-full py-2 rounded-xl bg-surface-low border border-line text-ink hover:bg-primary hover:text-white hover:border-primary font-bold text-xs transition-all flex items-center justify-center gap-1.5 shadow-sm"
+                          className="min-h-11 w-full rounded-xl bg-surface-low border border-line text-ink hover:bg-primary hover:text-white hover:border-primary font-bold text-xs transition-all flex items-center justify-center gap-1.5 shadow-sm"
                         >
                           <span className="material-symbols-outlined text-sm">shopping_bag</span>
                           <span>Add to Cart</span>
@@ -481,7 +481,7 @@ export function InstantMartPage() {
                           <button
                             type="button"
                             onClick={() => updateQuantity(item.id, -1)}
-                            className="h-7 w-7 rounded-lg bg-white text-ink flex items-center justify-center hover:bg-surface-container active:scale-95 transition-all shadow-sm"
+                            className="h-10 w-10 rounded-lg bg-white text-ink flex items-center justify-center hover:bg-surface-container active:scale-95 transition-all shadow-sm"
                           >
                             <span className="material-symbols-outlined text-xs">remove</span>
                           </button>
@@ -491,7 +491,7 @@ export function InstantMartPage() {
                           <button
                             type="button"
                             onClick={() => updateQuantity(item.id, 1)}
-                            className="h-7 w-7 rounded-lg bg-primary text-white flex items-center justify-center hover:bg-primary-dark active:scale-95 transition-all shadow-sm"
+                            className="h-10 w-10 rounded-lg bg-primary text-white flex items-center justify-center hover:bg-primary-dark active:scale-95 transition-all shadow-sm"
                           >
                             <span className="material-symbols-outlined text-xs">add</span>
                           </button>
