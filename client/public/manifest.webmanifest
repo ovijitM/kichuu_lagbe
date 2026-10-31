@@ -1,0 +1,25 @@
+{
+  "name": "Kichuu Lagbe",
+  "short_name": "Kichuu Lagbe",
+  "description": "Your residential super app for everyday needs.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#faf8ff",
+  "theme_color": "#006948",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "500x500",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "64x64",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
